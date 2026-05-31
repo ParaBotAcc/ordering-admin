@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.utils.SpringBeanHolder;
 import org.springframework.boot.SpringApplication;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -66,7 +67,7 @@ public class AppRun {
      * 访问首页，转发到前端 SPA
      */
     @AnonymousGetMapping("/")
-    public String index() {
-        return "<html><head><meta http-equiv='refresh' content='0;url=/index.html'></head></html>";
+    public RedirectView index() {
+        return new RedirectView("/index.html");
     }
 }
