@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>me.zhengjie</groupId>
+    <artifactId>eladmin</artifactId>
+    <version>2.7</version>
+  </parent>
+  <artifactId>eladmin-tools</artifactId>
+  <name>工具模块</name>
+  <properties>
+    <mail.version>1.4.7</mail.version>
+    <alipay.version>4.22.57.ALL</alipay.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>me.zhengjie</groupId>
+      <artifactId>eladmin-logging</artifactId>
+      <version>2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>${mail.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alipay.sdk</groupId>
+      <artifactId>alipay-sdk-java</artifactId>
+      <version>${alipay.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>s3</artifactId>
+      <version>2.30.13</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
