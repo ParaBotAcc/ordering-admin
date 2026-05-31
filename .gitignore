@@ -5,3 +5,9 @@
 */*.iml
 /.gradle/
 /application.pid
+# 构建产物
+target/
+*.pid
+*.log
+
+# 前端静态文件（由 eladmin-web 构建后复制过来）

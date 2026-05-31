@@ -63,12 +63,10 @@ public class AppRun {
     }
 
     /**
-     * 访问首页提示
-     *
-     * @return /
+     * 访问首页，转发到前端 SPA
      */
     @AnonymousGetMapping("/")
     public String index() {
-        return "Backend service started successfully";
+        return "<html><head><meta http-equiv='refresh' content='0;url=/index.html'></head></html>";
     }
 }
