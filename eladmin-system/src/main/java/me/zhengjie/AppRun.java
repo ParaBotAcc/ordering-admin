@@ -20,15 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.utils.SpringBeanHolder;
 import org.springframework.boot.SpringApplication;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StreamUtils;
+import org.springframework.stereotype.Controller;
 
 /**
  * 开启审计功能 -> @EnableJpaAuditing
@@ -38,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @EnableAsync
-@RestController
+@Controller
 @Api(hidden = true)
 @SpringBootApplication
 @EnableTransactionManagement
@@ -47,8 +48,6 @@ public class AppRun {
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(AppRun.class);
-        // 监控应用的PID，启动时可指定PID路径：--spring.pid.file=/home/eladmin/app.pid
-        // 或者在 application.yml 添加文件路径，方便 kill，kill `cat /home/eladmin/app.pid`
         springApplication.addListeners(new ApplicationPidFileWriter());
         ConfigurableApplicationContext context = springApplication.run(args);
         String port = context.getEnvironment().getProperty("server.port");
@@ -63,11 +62,8 @@ public class AppRun {
         return new SpringBeanHolder();
     }
 
-    /**
-     * 访问首页，转发到前端 SPA
-     */
     @AnonymousGetMapping("/")
-    public RedirectView index() {
-        return new RedirectView("/index.html");
+    public String index() {
+        return "forward:/index.html";
     }
 }
