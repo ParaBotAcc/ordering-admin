@@ -78,23 +78,11 @@ public class AuthController {
     @ApiOperation("登录授权")
     @AnonymousPostMapping(value = "/login")
     public ResponseEntity<Object> login(@Validated @RequestBody AuthUserDto authUser, HttpServletRequest request) throws Exception {
-        // 密码解密（dev 模式下允许明文）
-        String password;
-        try {
-            password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, authUser.getPassword());
-        } catch (Exception e) {
-            password = authUser.getPassword();
-        }
-        // dev 模式跳过验证码
-        if (authUser.getUuid() != null && !authUser.getUuid().isEmpty()) {
-            String code = redisUtils.get(authUser.getUuid(), String.class);
-            redisUtils.del(authUser.getUuid());
-            if (StringUtils.isBlank(code) || StringUtils.isBlank(authUser.getCode()) || !authUser.getCode().equalsIgnoreCase(code)) {
-                throw new BadRequestException("验证码错误");
-            }
-        }
+        // dev 模式：直接使用明文密码，跳过 RSA 解密和验证码
+        String password = authUser.getPassword();
         // 获取用户信息
         JwtUserDto jwtUser = userDetailsService.loadUserByUsername(authUser.getUsername());
+        System.out.println("[DEV] Login: " + authUser.getUsername() + " / " + password + " / db_hash: " + jwtUser.getPassword().substring(0, 20));
         // 验证用户密码
         if (!passwordEncoder.matches(password, jwtUser.getPassword())) {
             throw new BadRequestException("登录密码错误");
